@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Float64
-
+from geometry_msgs.msg import PoseStamped
 class PoseSubscriberNode(Node):
     def __init__(self):
         super( ).__init__("pose_subscriber")
@@ -11,6 +11,8 @@ class PoseSubscriberNode(Node):
             Odometry, "/gx5/nav/odom", self.pose_callback, 1000)
         self.comp_subscriber_ = self.create_subscription(
             Float64, "/gx5/compass", self.compass_callback, 1000)
+        self.comp_subscriber_ = self.create_subscription(
+            PoseStamped, "/goal_pose", self.goal_pose_callback, 1000)
     
     def pose_callback(self, msg: Odometry):
        self.get_logger().info(str(msg.pose.pose.position.x) + " Lat")
@@ -18,6 +20,9 @@ class PoseSubscriberNode(Node):
        
     def compass_callback(self, msg: Float64):
        self.get_logger().info(str(msg.data) + " Rotation")
+
+    def goal_pose_callback(self, msg: PoseStamped):
+        self.get_logger().info(str(msg.pose.position.x) + ", " + str(msg.pose.position.y))
 
     
 
