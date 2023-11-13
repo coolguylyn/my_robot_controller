@@ -22,7 +22,7 @@ class PoseSubscriberNode(Node):
        self.get_logger().info(str(msg.data) + " Rotation")
 
     def goal_pose_callback(self, msg: PoseStamped):
-        self.get_logger().info(str(msg.pose.position.x) + ", " + str(msg.pose.position.y))
+        self.get_logger().info("x= " + str(msg.pose.position.x) + ",y= " + str(msg.pose.position.y))
 
     
 
